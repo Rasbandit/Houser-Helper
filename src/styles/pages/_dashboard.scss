@@ -1,0 +1,47 @@
+.dashboard {
+  width: 900px;
+  height: 100vh;
+  @include flexSetUp(flex-start, center, column);
+  margin: auto;
+  background: white;
+
+  .house-card {
+    @include flexSetUp();
+    @include width-height(700px, 200px);
+    margin-top: 15px;
+
+    .img-container {
+      @include width-height(28%, 100%);
+      @include flexSetUp(center, center);
+      overflow: hidden;
+      img {
+        @include width-height(100%, auto)
+      }
+    }
+    .center {
+      @include width-height(42%, 100%);
+      background-color: pink;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      h3 {
+        font-weight: bold;
+        font-size: 16px;
+      }
+    }
+    .right {
+      @include width-height(30%, 100%);
+      background: #bada55;
+       padding: 10px;
+      box-sizing: border-box;
+
+      .spread {
+        @include flexSetUp(space-between);
+
+        div:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

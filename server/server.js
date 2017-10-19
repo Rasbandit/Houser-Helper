@@ -30,3 +30,5 @@ app.post('/api/favorites/:id', main.favorite);
 
 app.get('/api/favoritesid', main.getFavoritesId);
 app.get('/api/properties', main.getAllHouses);
+
+app.delete('/api/favorites/:id', main.unfavorite);

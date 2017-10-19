@@ -1,3 +1,3 @@
 select * 
 from favorites
-where houseid = $2 and userid = $1
+where house_id = $2 and user_id = $1

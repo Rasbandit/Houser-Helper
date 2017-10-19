@@ -1,3 +1,3 @@
 select *
 from favorites
-where userid = $1
+where user_id = $1

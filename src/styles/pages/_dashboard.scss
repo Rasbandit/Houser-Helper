@@ -1,14 +1,83 @@
 .dashboard {
   width: 900px;
-  height: 100vh;
+  height: 100%;
   @include flexSetUp(flex-start, center, column);
   margin: auto;
   background: white;
+  padding-top: 15px;
+
+  .top {
+    width: 85%;
+    @include flexSetUp(flex-start, center, column);
+    
+    .button {
+      background: $lime-green;
+      @include flexSetUp(center, center);
+      height: 30px;
+      padding: 5px 10px;
+      color: black;
+      font-size: 20px;
+      font-weight: 900;
+      border-radius: 7px;
+      transition: .4s ease all;
+      margin-bottom: 20px;
+      box-shadow: 2px 2px 2px rgba(75, 75, 75, 0.63);
+    }
+    .button:hover{
+      cursor: pointer;
+      background-color: $lime-green-hover;
+    }
+    .filter {
+      border-bottom: 1px solid grey;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      width: 100%;
+      @include flexSetUp(center, center);
+      
+
+      input {
+        width: 80px;
+      }
+
+      .filter-btn {
+        @include flexSetUp(center, center);
+        color: black;
+        background: $lime-green;
+        padding: 6px;
+        border-radius: 5px;
+        box-shadow: 2px 2px 2px rgba(75, 75, 75, 0.63);
+        margin-left: 8px;
+        cursor: pointer;
+        transition: .4s ease all;
+        font-weight: bold;
+      }
+      .filter-btn:hover {
+        background-color: $lime-green-hover;
+      }
+      .reset-btn {
+        @include flexSetUp(center, center);
+        color: white;
+        background: $dark-green;
+        padding: 6px;
+        border-radius: 5px;
+        box-shadow: 2px 2px 2px rgba(75, 75, 75, 0.63);
+        margin-left: 8px;
+        cursor: pointer;
+        transition: .4s ease all;
+      }
+      .reset-btn:hover {
+        background: $dark-green-hover;
+      }
+    }
+
+  }
 
   .house-card {
     @include flexSetUp();
-    @include width-height(700px, 200px);
-    margin-top: 15px;
+    @include width-height(85%, 145px);
+    margin-bottom: 15px;
+    background: rgb(187, 187, 187);
+    box-shadow: 3px 3px 5px rgba(68, 68, 68, 0.534);
 
     .img-container {
       @include width-height(28%, 100%);
@@ -20,22 +89,37 @@
     }
     .center {
       @include width-height(42%, 100%);
-      background-color: pink;
       padding: 10px;
       box-sizing: border-box;
       overflow-y: auto;
+      border-right: 1px solid rgba(68, 68, 68, 0.746);
       h3 {
         font-weight: bold;
         font-size: 16px;
+        text-transform: capitalize;
+        margin-bottom: 8px;
+      }
+      p {
+        font-size: 14px;
       }
     }
     .right {
       @include width-height(30%, 100%);
-      background: #bada55;
-       padding: 10px;
+      @include flexSetUp(center, flex-start, column)
+      padding: 10px;
       box-sizing: border-box;
+      font-size: 13px;
+
+      h4 {
+        margin-bottom: 5px;
+      }
+
+      span {
+        font-weight: bold;
+      }
 
       .spread {
+        width: 100%;
         @include flexSetUp(space-between);
 
         div:hover {

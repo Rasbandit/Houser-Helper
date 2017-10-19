@@ -54,6 +54,16 @@ module.exports = {
       .then((favorites) => {
         res.send(favorites);
       });
+  },
+
+  unfavorite(req, res) {
+    req.app.get('db').deleteFavorite([req.session.user.id, req.params.id])
+      .then(() => {
+        req.app.get('db').getUsersFavorites([req.session.user.id])
+          .then((favorites) => {
+            res.send(favorites);
+          });
+      });
   }
 
 };

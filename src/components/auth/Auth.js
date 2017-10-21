@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { getHouses, getFavorites } from '../../ducks/reducer';
 
 import houseImg from './../../images/auth_logo.png';
 
-export default class Auth extends React.Component {
+class Auth extends React.Component {
   constructor() {
     super();
 
@@ -11,6 +13,11 @@ export default class Auth extends React.Component {
       username: '',
       password: ''
     };
+  }
+
+  componentDidMount() {
+    this.props.getHouses();
+    this.props.getFavorites();
   }
 
   login(loginInfo) {
@@ -90,3 +97,9 @@ export default class Auth extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {};
+}
+
+export default connect(mapStateToProps, { getHouses, getFavorites })(Auth);

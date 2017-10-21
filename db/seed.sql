@@ -19,6 +19,27 @@ create table favorites (
     house_id Integer references houses(id)
 )
 
+create table images (
+    id serial PRIMARY key,
+    url varchar,
+    house_id INTEGER REFERENCES houses(id)
+)
+
+insert into images (url, house_id)
+values 
+(
+    'https://static1.squarespace.com/static/560dca68e4b0ffb1cd6f8ae7/5622e16ae4b0501d4068f6ce/5622e16be4b012625400eb4a/1445126508015/Cabin+by+the+Lake+Cline+2015.jpg?format=500w',
+    1
+),
+(
+    'https://i.pinimg.com/736x/bd/fa/36/bdfa36950870722ac3439cbfb976a629--bob-ross-paintings-paintings-for-sale.jpg',
+    1
+),
+(
+    'https://1209k.com/bobross/images/4066931.jpg',
+    1
+)
+
 insert into houses (img, loan, title, description, desired_rent, address, zip, city, state, recomended_rent, mortgage)
 values
 (

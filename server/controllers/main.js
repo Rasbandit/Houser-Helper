@@ -34,36 +34,61 @@ module.exports = {
   },
 
   favorite(req, res) {
-    req.app.get('db').checkDuplicateFavorite([req.session.user.id, req.params.id]).then((matches) => {
-      if(matches[0]) {
-        req.app.get('db').getUsersFavorites([req.session.user.id]).then((favorites) => {
-          res.send(favorites);
-        });
-      } else {
-        req.app.get('db').addFavorite([req.session.user.id, req.params.id]).then(() => {
+    if(req.session.user) {
+      req.app.get('db').checkDuplicateFavorite([req.session.user.id, req.params.id]).then((matches) => {
+        if (matches[0]) {
           req.app.get('db').getUsersFavorites([req.session.user.id]).then((favorites) => {
             res.send(favorites);
           });
-        });
-      }
-    });
+        } else {
+          req.app.get('db').addFavorite([req.session.user.id, req.params.id]).then(() => {
+            req.app.get('db').getUsersFavorites([req.session.user.id]).then((favorites) => {
+              res.send(favorites);
+            });
+          });
+        }
+      });
+    } else {
+      res.send([]);
+    }
   },
 
   getFavoritesId(req, res) {
-    req.app.get('db').getUsersFavorites([req.session.user.id])
-      .then((favorites) => {
-        res.send(favorites);
-      });
+    if(req.session.user) {
+      req.app.get('db').getUsersFavorites([req.session.user.id])
+        .then((favorites) => {
+          res.send(favorites);
+        });
+    } else {
+      res.send([]);
+    }
   },
 
   unfavorite(req, res) {
-    req.app.get('db').deleteFavorite([req.session.user.id, req.params.id])
-      .then(() => {
-        req.app.get('db').getUsersFavorites([req.session.user.id])
-          .then((favorites) => {
-            res.send(favorites);
-          });
-      });
+    if(req.session.user) {
+      req.app.get('db').deleteFavorite([req.session.user.id, req.params.id])
+        .then(() => {
+          req.app.get('db').getUsersFavorites([req.session.user.id])
+            .then((favorites) => {
+              res.send(favorites);
+            });
+        });
+    } else {
+      res.send([]);
+    }
+  },
+
+  getHouse(req, res) {
+    req.app.get('db').getHouse(req.params.id).then((house) => {
+      if(house[0]) {
+        req.app.get('db').getImages(req.params.id).then((images) => {
+          house[0].images = images;
+          res.send(house[0]);
+        });
+      } else {
+        res.status(404).send();
+      }
+    });
   }
 
 };

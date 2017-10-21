@@ -6,13 +6,16 @@ class Nav extends Component {
   render() {
     return (
       <div className="nav">
-        <div className="center">
-          <Link to="/" className="left">
+        <div className="content">
+          <Link to="/dashboard" className="left">
             <img src={houseLogo} alt="HouseLogo" /> <p className="para"><span>Houser</span> Helper</p>
           </Link>
-          <a className="right">
+          <Link to="/favorites" className="center">
+            Favorites
+          </Link>
+          <Link to="/" className="right">
             Logout
-          </a>
+          </Link>
         </div>
       </div>
     );

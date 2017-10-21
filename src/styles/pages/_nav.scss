@@ -4,13 +4,14 @@
   background-color: $medium-green;
   @include flexSetUp(flex-start, center);
 
-  .center {
+  .content {
     width: 900px;
     margin: 0 auto;
     @include flexSetUp(space-between, center);
 
     .left {
       font-family: $main-font;
+      width: 25%;
       @include flexSetUp(flex-start, center);
       font-weight: bold;
       font-size: 23px;
@@ -34,11 +35,29 @@
     .left:hover {
       text-shadow: 5px 5px 4px rgba(75, 75, 75, 0.63);
     }
+
+    .center {
+      @include flexSetUp(center, center);
+      width: 25%;
+            font-size: 23px;
+      color: white;
+      text-shadow: 3px 3px 3px rgba(75, 75, 75, 0.74);
+      transition: .7s ease all;
+      text-decoration: none;
+    }
+    .center:hover {
+      text-shadow: 5px 5px 4px rgba(75, 75, 75, 0.74);
+      cursor: pointer;
+    }
+
     .right {
+      @include flexSetUp(flex-end, center);
+      width: 25%;
       font-size: 23px;
       color: white;
       text-shadow: 3px 3px 3px rgba(75, 75, 75, 0.74);
       transition: .7s ease all;
+      text-decoration: none;
     }
     .right:hover {
       text-shadow: 5px 5px 4px rgba(75, 75, 75, 0.74);

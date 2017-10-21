@@ -1,45 +1,31 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { favoriteHouse, unfavoriteHouse, getHouses, getFavorites } from './../../ducks/reducer';
 
-class HouseCard extends Component {
+class HouseCardFavorites extends Component {
   constructor(props) {
     super(props);
 
-    let favortied = false;
-    props.favoriteHouses.forEach((item) => {
-      if (item.house_id === props.house.id) {
-        favortied = true;
-      }
-    });
-
     this.state = {
-      house: props.house,
-      favorited: favortied
+      house: props.house
     };
   }
 
-  componentWillReceiveProps(newProps) {
-    let flag = false;
-    newProps.favoriteHouses.forEach((item) => {
-      if(item.house_id === this.state.house.id) {
-        flag = true;
-        this.setState({
-          favorited: true
-        });
-      }
-    });
-    if(flag === false) {
-      this.setState({
-        favorited: false
-      });
-    }
-  }
 
   render() {
     const { house } = this.state;
 
+    let flag = false;
+    this.props.favoriteHouses.forEach((item) => {
+      if (item.house_id === this.state.house.id) {
+        flag = true;
+      }
+    });
+
     return (
-      <div className="house-card">
+      <Link to={`/details/${house.id}`} className="house-card">
         <div className="img-container">
           <img src={house.img} alt={house.description} />
         </div>
@@ -51,15 +37,17 @@ class HouseCard extends Component {
           <div className="spread">
             <h4><span>Loan:</span> ${house.loan}</h4>
             {
-              this.state.favorited ?
-                (<div onClick={() => { this.props.unfavorite(house.id); }}>
+              flag ?
+                (<div onClick={() => { this.props.unfavoriteHouse(house.id); }}>
                   <FontAwesome
                     name="star"
+                    size="lg"
                     style={{ color: 'gold' }}
                   /></div>) :
-                (<div onClick={() => { this.props.favorite(house.id); }}>
+                (<div onClick={() => { this.props.favoriteHouse(house.id); }}>
                   <FontAwesome
                     name="star-o"
+                    size="lg"
                     style={{ color: 'gold' }}
                   />
                 </div>)
@@ -71,9 +59,15 @@ class HouseCard extends Component {
           <h4><span>Address:</span> {house.address}</h4>
           <h4><span>City:</span> {house.city}</h4>
         </div>
-      </div>
+      </Link>
     );
   }
 }
 
-export default HouseCard;
+function mapStateToProps(state) {
+  return {
+    favoriteHouses: state.favoriteHouses
+  };
+}
+
+export default connect(mapStateToProps, { favoriteHouse, unfavoriteHouse, getHouses, getFavorites })(HouseCardFavorites);

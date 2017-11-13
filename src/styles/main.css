@@ -48,7 +48,7 @@ body {
 
 .auth {
   width: 900px;
-  height: 100vh;
+  min-height: calc(100vh - 60px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,7 +77,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex-direction: row; }
+    flex-direction: row;
+    cursor: pointer; }
     .auth .buttons .button {
       width: 120px;
       height: 35px;
@@ -97,7 +98,7 @@ body {
 
 .dashboard {
   width: 900px;
-  height: 100%;
+  min-height: calc(100vh - 75px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -112,6 +113,7 @@ body {
     align-items: center;
     flex-direction: column; }
     .dashboard .top .button {
+      text-decoration: none;
       background: #8aea92;
       display: flex;
       justify-content: center;
@@ -286,6 +288,7 @@ body {
 .favorites {
   width: 900px;
   height: 100%;
+  min-height: calc(100vh - 75px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -420,9 +423,9 @@ body {
 
 .details {
   width: 900px;
-  height: 100%;
+  min-height: calc(100vh - 75px);
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
   flex-direction: column;
   margin: auto;
@@ -436,7 +439,7 @@ body {
     flex-direction: row;
     font-size: 30px;
     font-weight: bolder;
-    margin-bottom: 15px; }
+    margin-bottom: 20px; }
     .details .title h1 {
       margin: 0 13px; }
   .details .img-container {
@@ -487,7 +490,7 @@ body {
     font-weight: bold;
     background: #8aea92;
     border-radius: 5px;
-    margin: 15px;
+    margin: 20px;
     transition: .1s linear box-shadow, .4s ease background-color;
     box-shadow: 2px 2px 2px rgba(75, 75, 75, 0.63);
     cursor: pointer; }
@@ -501,7 +504,7 @@ body {
     font-weight: bold;
     background: #ea8b8a;
     border-radius: 5px;
-    margin: 15px;
+    margin: 20px;
     transition: .1s linear box-shadow, .4s ease background-color;
     box-shadow: 2px 2px 2px rgba(75, 75, 75, 0.63);
     cursor: pointer; }
@@ -510,3 +513,207 @@ body {
     background-color: #d15351; }
   .details .unfavorite:active {
     box-shadow: 1px 1px 0px rgba(75, 75, 75, 0.63); }
+
+.wizzard {
+  width: 900px;
+  min-height: calc(100vh - 75px);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  background: white;
+  padding-top: 15px; }
+  .wizzard .top {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row; }
+    .wizzard .top h2 {
+      font-size: 24px;
+      font-weight: bold; }
+    .wizzard .top .button {
+      padding: 10px;
+      font-weight: bolder;
+      background: #ea8b8a;
+      border-radius: 5px;
+      transition: .1s linear box-shadow, .4s ease background-color;
+      box-shadow: 2px 2px 2px rgba(75, 75, 75, 0.63);
+      cursor: pointer;
+      text-decoration: none;
+      color: black; }
+  .wizzard .button:hover {
+    cursor: pointer;
+    background-color: #d15351; }
+  .wizzard .button:active {
+    box-shadow: 1px 1px 0px rgba(75, 75, 75, 0.63); }
+  .wizzard .step {
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column; }
+    .wizzard .step h1 {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 20px 0; }
+    .wizzard .step .step-gauge {
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-direction: row; }
+  .wizzard .inputs {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 25px; }
+    .wizzard .inputs .img-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      height: 350px;
+      width: 80%;
+      background: #d1d1d1;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      border-color: #519872;
+      border-width: 1px;
+      border-style: solid;
+      overflow: hidden; }
+      .wizzard .inputs .img-container img {
+        width: 100%;
+        height: auto; }
+    .wizzard .inputs .thumbnails {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: row;
+      flex-wrap: wrap; }
+      .wizzard .inputs .thumbnails .thumbnail {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        width: 120px;
+        height: 120px;
+        margin: 0 5px;
+        overflow: hidden; }
+        .wizzard .inputs .thumbnails .thumbnail img {
+          width: 100%;
+          height: auto;
+          cursor: pointer; }
+    .wizzard .inputs .middle {
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap; }
+      .wizzard .inputs .middle section {
+        width: 40%; }
+        .wizzard .inputs .middle section label {
+          font-size: 18px;
+          font-weight: bold;
+          margin-left: 30px;
+          margin-bottom: 3px; }
+        .wizzard .inputs .middle section input {
+          width: 100%;
+          box-sizing: border-box;
+          border-color: #519872;
+          border-width: 1px;
+          border-style: solid;
+          font-size: 19px;
+          padding-left: 5px; }
+    .wizzard .inputs section {
+      width: 80%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      margin-bottom: 20px; }
+      .wizzard .inputs section label {
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 30px;
+        margin-bottom: 3px; }
+      .wizzard .inputs section input {
+        width: 100%;
+        box-sizing: border-box;
+        border-color: #519872;
+        border-width: 1px;
+        border-style: solid;
+        font-size: 19px;
+        padding-left: 5px; }
+      .wizzard .inputs section textarea {
+        resize: none;
+        width: 100%;
+        height: 200px;
+        box-sizing: border-box;
+        border-color: #519872;
+        border-width: 1px;
+        border-style: solid;
+        font-size: 19px;
+        font-family: "Open Sans", sans-serif;
+        padding-left: 5px; }
+      .wizzard .inputs section .img-inputs {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: row;
+        margin-bottom: 15px; }
+        .wizzard .inputs section .img-inputs .clear-button {
+          font-size: 15px;
+          color: white;
+          background: #3b5249;
+          padding: 6px;
+          border-radius: 5px;
+          box-shadow: 2px 2px 2px rgba(75, 75, 75, 0.63);
+          margin-left: 8px;
+          cursor: pointer;
+          transition: .1s linear box-shadow, .4s ease background-color;
+          -webkit-user-select: none;
+          text-decoration: none; }
+        .wizzard .inputs section .img-inputs .clear-button:hover {
+          background: #253b33; }
+        .wizzard .inputs section .img-inputs .clear-button:active {
+          box-shadow: 1px 1px 2px rgba(75, 75, 75, 0.63); }
+    .wizzard .inputs .buttons {
+      width: 80%;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      flex-direction: row; }
+      .wizzard .inputs .buttons .next-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        font-size: 20px;
+        color: white;
+        background: #3b5249;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 2px 2px 2px rgba(75, 75, 75, 0.63);
+        margin-left: 8px;
+        cursor: pointer;
+        transition: .1s linear box-shadow, .4s ease background-color;
+        -webkit-user-select: none;
+        text-decoration: none;
+        margin-bottom: 25px; }
+      .wizzard .inputs .buttons .next-button:hover {
+        background: #253b33; }
+      .wizzard .inputs .buttons .next-button:active {
+        box-shadow: 1px 1px 2px rgba(75, 75, 75, 0.63); }
+      .wizzard .inputs .buttons .complete {
+        color: black;
+        background: #8aea92; }
+      .wizzard .inputs .buttons .complete:hover {
+        background: #51d15c; }
+      .wizzard .inputs .buttons .complete:active {
+        box-shadow: 1px 1px 2px rgba(75, 75, 75, 0.63); }

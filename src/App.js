@@ -5,6 +5,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import Nav from './components/Nav';
 import Favorites from './components/Favories';
 import Details from './components/Details';
+import Wizzard from './components/wizzard/Wizzard';
 import './App.css';
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/favorites" component={Favorites} />
           <Route path="/details/:id" component={Details} />
+          <Route path="/wizzard" component={Wizzard} />
         </Switch>
       </div>
     );

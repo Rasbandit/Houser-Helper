@@ -35,7 +35,7 @@ class HouseCardFavorites extends Component {
         </div>
         <div className="right">
           <div className="spread">
-            <h4><span>Loan:</span> ${house.loan}</h4>
+            <h4><span>Loan:</span> ${house.loan ? house.loan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</h4>
             {
               flag ?
                 (<div onClick={() => { this.props.unfavoriteHouse(house.id); }}>
@@ -53,9 +53,9 @@ class HouseCardFavorites extends Component {
                 </div>)
             }
           </div>
-          <h4><span>Monthly Mortgage:</span> ${house.mortgage}</h4>
-          <h4><span>Recommended Rent:</span> ${house.desired_rent}</h4>
-          <h4><span>Desired Rent:</span> ${house.desired_rent}</h4>
+          <h4><span>Monthly Mortgage:</span> ${house.mortgage ? house.mortgage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</h4>
+          <h4><span>Recommended Rent:</span> ${house.recomended_rent ? house.recomended_rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</h4>
+          <h4><span>Desired Rent:</span> ${house.desired_rent ? house.desired_rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</h4>
           <h4><span>Address:</span> {house.address}</h4>
           <h4><span>City:</span> {house.city}</h4>
         </div>

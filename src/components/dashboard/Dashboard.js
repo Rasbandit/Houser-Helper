@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getHouses, getFavorites } from '../../ducks/reducer';
 
@@ -10,7 +11,7 @@ class Dashboard extends React.Component {
     super();
 
     this.state = {
-      // houses: [],
+      houses: [],
       favoriteHouses: [],
       desiredRent: Infinity
     };
@@ -26,7 +27,8 @@ class Dashboard extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      favoriteHouses: nextProps.favoriteHouses
+      favoriteHouses: nextProps.favoriteHouses,
+      houses: nextProps.houses
     });
   }
 
@@ -48,9 +50,10 @@ class Dashboard extends React.Component {
   }
 
   handleType(desiredRent) {
+    desiredRent = desiredRent.replace(/,/g, '');
     if (desiredRent && parseInt(desiredRent, 10) && desiredRent[desiredRent.length - 1] !== /d/) {
       this.setState({
-        desiredRent: parseInt(desiredRent, 10)
+        desiredRent: desiredRent.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       });
     } else {
       this.setState({
@@ -66,10 +69,14 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const houses = this.props.houses.filter(house => house.desired_rent <= this.state.desiredRent).map(house => (
+    let desiredRent = this.state.desiredRent;
+    if(desiredRent !== Infinity) {
+      desiredRent = parseInt(this.state.desiredRent.toString().replace(/,/g, ''), 10);
+    }
+    const houses = this.state.houses.filter(house => house.desired_rent <= desiredRent).map(house => (
       <HouseCardDashboard
         house={house}
-        favoriteHouses={this.props.favoriteHouses}
+        favoriteHouses={this.state.favoriteHouses}
         key={house.id}
         favorite={this.favorite}
         unfavorite={this.unfavorite}
@@ -78,7 +85,7 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard">
         <div className="top">
-          <div className="button">Add new property</div>
+          <Link to="/wizzard/1" className="button">Add new property</Link>
           <div className="filter">
             List properties with "desired rent" less than $<input type="text" value={this.state.desiredRent === Infinity ? '' : this.state.desiredRent} onChange={(e) => { this.handleType(e.target.value); }} /><div className="reset-btn" onClick={() => { this.clearInput(); }}>Reset</div>
           </div>

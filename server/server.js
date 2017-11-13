@@ -27,9 +27,11 @@ massive(process.env.CONNECTION_STRING).then((db) => {
 app.post('/api/auth/login', main.login);
 app.post('/api/auth/register', main.register);
 app.post('/api/favorites/:id', main.favorite);
+app.post('/api/create', main.addHouse);
 
 app.get('/api/favoritesid', main.getFavoritesId);
 app.get('/api/properties', main.getAllHouses);
 app.get('/house/:id', main.getHouse);
+app.get('/listed', main.getListed);
 
 app.delete('/api/favorites/:id', main.unfavorite);

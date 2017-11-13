@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getHouses, getFavorites } from '../../ducks/reducer';
 
 import houseImg from './../../images/auth_logo.png';
+import SweetAlert from 'sweetalert2-react';
 
 class Auth extends React.Component {
   constructor() {
@@ -11,7 +12,10 @@ class Auth extends React.Component {
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      wrongLogin: false,
+      emptyFields: false,
+      usernameExists: false
     };
   }
 
@@ -21,15 +25,19 @@ class Auth extends React.Component {
   }
 
   login(loginInfo) {
-    axios.post('/api/auth/login', loginInfo)
-      .then((response) => {
-        if(response.status === 200) {
-          this.props.history.push('/dashboard');
-        }
-      })
-      .catch((err) => {
-        alert('nope');
-      });
+    if (loginInfo.username && loginInfo.password) {
+      axios.post('/api/auth/login', loginInfo)
+        .then((response) => {
+          if(response.status === 200) {
+            this.props.history.push('/dashboard');
+          }
+        })
+        .catch((err) => {
+          this.setState({ wrongLogin: true });
+        });
+    } else {
+      this.setState({ emptyFields: true });
+    }
   }
 
   register(registerInfo) {
@@ -41,10 +49,10 @@ class Auth extends React.Component {
           }
         })
         .catch((err) => {
-          alert('pick a better name');
+          this.setState({ usernameExists: true });
         });
     } else {
-      alert('Fill in the info please ⏰');
+      this.setState({ emptyFields: true });
     }
   }
 
@@ -71,6 +79,26 @@ class Auth extends React.Component {
           }
         }}
       >
+        <SweetAlert
+          show={this.state.wrongLogin}
+          type="error"
+          title="Incorrect Username or Password!"
+          onConfirm={() => this.setState({ wrongLogin: false })}
+        />
+        <SweetAlert
+          show={this.state.usernameExists}
+          type="info"
+          title="Username already exists!"
+          text="Please pick a different username."
+          onConfirm={() => this.setState({ usernameExists: false })}
+        />
+        <SweetAlert
+          show={this.state.emptyFields}
+          type="info"
+          title="Empty Fields"
+          text="Please provide both a Username and Password."
+          onConfirm={() => this.setState({ emptyFields: false })}
+        />
         <img src={houseImg} alt="Its a pic of a house, I wouldn't worry about it grandma" />
         <div className="inputs">
           <h3>Username</h3>

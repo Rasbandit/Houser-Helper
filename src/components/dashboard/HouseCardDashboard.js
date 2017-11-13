@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { favoriteHouse, unfavoriteHouse } from './../../ducks/reducer';
 
+
 class HouseCardDashboard extends Component {
   constructor(props) {
     super(props);
@@ -17,9 +18,19 @@ class HouseCardDashboard extends Component {
 
     this.state = {
       house: props.house,
+      favoriteHouses: props.favoriteHouses,
       favorited: flag
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    nextProps.favoriteHouses.forEach((item) => {
+      if (item.house_id === this.state.house.id) {
+        this.setState({ favorited: true });
+      }
+    });
+  }
+
 
   favoriteHouse(id) {
     this.props.favoriteHouse(id);
@@ -43,13 +54,19 @@ class HouseCardDashboard extends Component {
       <div className="house-card-dashboard">
         {
           this.state.favorited ?
-            (<div className="star" onClick={() => { this.unfavoriteHouse(house.id); }}>
+            (<div
+              className="star"
+              onClick={() => { this.unfavoriteHouse(house.id); }}
+            >
               <FontAwesome
                 name="star"
                 size="lg"
                 style={{ color: 'gold' }}
               /></div>) :
-            (<div className="star" onClick={() => { this.favoriteHouse(house.id); }}>
+            (<div
+              className="star"
+              onClick={() => { this.favoriteHouse(house.id); }}
+            >
               <FontAwesome
                 name="star-o"
                 size="lg"
@@ -62,7 +79,8 @@ class HouseCardDashboard extends Component {
         </Link>
         <Link to={`/details/${house.id}`} className="test">
           <h1>{house.title}</h1>
-          <h4><span>Desired Rent:</span> ${house.desired_rent}</h4>
+          <h4>
+            <span>Desired Rent:</span> ${house.desired_rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</h4>
         </Link>
       </div>
     );

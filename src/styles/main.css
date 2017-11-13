@@ -296,6 +296,11 @@ body {
   margin: auto;
   background: white;
   padding-top: 15px; }
+  .favorites h1 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 30px;
+    font-weight: bolder;
+    margin-bottom: 12px; }
   .favorites .house-card {
     display: flex;
     justify-content: flex-start;
@@ -432,6 +437,9 @@ body {
   background: white;
   padding-top: 15px;
   font-size: 20px; }
+  .details input {
+    margin-top: 4px;
+    width: 80%; }
   .details .title {
     display: flex;
     justify-content: center;
@@ -469,6 +477,12 @@ body {
     .details .text p {
       text-indent: 35px;
       max-width: 100%; }
+    .details .text textarea {
+      width: 100%;
+      resize: none;
+      height: 100px;
+      font-family: "Open Sans", sans-serif;
+      font-size: 15px; }
   .details .information {
     display: flex;
     justify-content: flex-start;
@@ -481,7 +495,9 @@ body {
         width: auto;
         margin: 0 auto;
         margin-bottom: 7px;
-        text-transform: capitalize; }
+        text-transform: capitalize;
+        display: flex;
+        flex-direction: column; }
       .details .information .column span {
         font-weight: bolder;
         margin-right: 6px; }

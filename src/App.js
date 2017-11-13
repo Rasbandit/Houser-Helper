@@ -6,6 +6,8 @@ import Nav from './components/Nav';
 import Favorites from './components/Favories';
 import Details from './components/Details';
 import Wizzard from './components/wizzard/Wizzard';
+import ListedHouses from './components/ListedHouses';
+import EditHouse from './components/EditHouse';
 import './App.css';
 
 class App extends Component {
@@ -19,6 +21,8 @@ class App extends Component {
           <Route path="/favorites" component={Favorites} />
           <Route path="/details/:id" component={Details} />
           <Route path="/wizzard" component={Wizzard} />
+          <Route path="/listed" component={ListedHouses} />
+          <Route path="/edit/:id" component={EditHouse} />
         </Switch>
       </div>
     );

@@ -28,6 +28,7 @@ class Favorites extends Component {
     ));
     return (
       <div className="favorites">
+        <h1>Your Favorites</h1>
         {houses}
       </div>
     );

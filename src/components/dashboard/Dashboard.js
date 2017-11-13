@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getHouses, getFavorites } from '../../ducks/reducer';
+import { getHouses, getFavorites, getListed } from '../../ducks/reducer';
 
 import HouseCardDashboard from './HouseCardDashboard';
 
@@ -13,6 +13,7 @@ class Dashboard extends React.Component {
     this.state = {
       houses: [],
       favoriteHouses: [],
+      listed: [],
       desiredRent: Infinity
     };
 
@@ -23,6 +24,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     this.props.getHouses();
     this.props.getFavorites();
+    this.props.getListed();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,7 +89,7 @@ class Dashboard extends React.Component {
         <div className="top">
           <Link to="/wizzard/1" className="button">Add new property</Link>
           <div className="filter">
-            List properties with "desired rent" less than $<input type="text" value={this.state.desiredRent === Infinity ? '' : this.state.desiredRent} onChange={(e) => { this.handleType(e.target.value); }} /><div className="reset-btn" onClick={() => { this.clearInput(); }}>Reset</div>
+            List properties with desired rent less than $<input type="text" value={this.state.desiredRent === Infinity ? '' : this.state.desiredRent} onChange={(e) => { this.handleType(e.target.value); }} /><div className="reset-btn" onClick={() => { this.clearInput(); }}>Reset</div>
           </div>
         </div>
         <div className="houses">
@@ -105,4 +107,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getHouses, getFavorites })(Dashboard);
+export default connect(mapStateToProps, { getHouses, getFavorites, getListed })(Dashboard);

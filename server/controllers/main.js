@@ -96,6 +96,30 @@ module.exports = {
     } else {
       res.status(200).send([]);
     }
-  }
+  },
 
+  async updateHouse(req, res) {
+    const DB = req.app.get('db');
+    const { loan, title, description, desired_rent, address, zip, city, state, recomended_rent, mortgage, id } = req.body;
+    await DB.updateHouse([loan, title, description, desired_rent, address, zip, city, state, recomended_rent, mortgage, id]);
+    res.status(200).send();
+  },
+
+  async delete(req, res) {
+    const DB = req.app.get('db');
+    const { id } = req.params;
+    console.log(id, req.session.user.id);
+    if(req.session.user) {
+      await DB.deleteImages(id);
+      await DB.deleteHouse([id, req.session.user.id]);
+      res.status(200).send();
+    } else {
+      res.status(401).send();
+    }
+  },
+
+  logout(req, res) {
+    req.session.destroy();
+    res.status(200).send();
+  }
 };

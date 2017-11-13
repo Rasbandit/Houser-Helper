@@ -10,23 +10,30 @@ create table houses (
     city varChar,
     state varChar,
     recomended_rent numeric,
-    mortgage numeric
+    mortgage numeric,
+    owner integer references user(id)
 )
 
 create table favorites (
     id serial primary key,
-    user_id INTEGER references users(id),
-    house_id Integer references houses(id)
+    user_id INTEGER references users(id) ON DELETE CASCADE,
+    house_id Integer references houses(id) ON DELETE CASCADE
 )
 
 create table images (
     id serial PRIMARY key,
     url varchar,
-    house_id INTEGER REFERENCES houses(id)
+    house_id INTEGER REFERENCES houses(id) on delete Cascade
+)
+
+create table users(
+    id serial PRIMARY key,
+    username varchar not null,
+    password varchar not null
 )
 
 insert into images (url, house_id)
-values 
+values
 (
     'https://static1.squarespace.com/static/560dca68e4b0ffb1cd6f8ae7/5622e16ae4b0501d4068f6ce/5622e16be4b012625400eb4a/1445126508015/Cabin+by+the+Lake+Cline+2015.jpg?format=500w',
     1
@@ -68,14 +75,14 @@ values
 3000,
 750000
 ),
-('https://vignette.wikia.nocookie.net/fallout/images/9/90/Harpers_shack.jpg/revision/latest?cb=20120831231543', 
-25, 
-'The Shack', 
-'An iradiated house.', 
-5, 
-'123 fallout way', 
-841444, 
-'Lake Stevens', 
+('https://vignette.wikia.nocookie.net/fallout/images/9/90/Harpers_shack.jpg/revision/latest?cb=20120831231543',
+25,
+'The Shack',
+'An iradiated house.',
+5,
+'123 fallout way',
+841444,
+'Lake Stevens',
 'Washington',
 50,
 2000
@@ -92,14 +99,14 @@ values
 0,
 30000
 ),
-('https://i.ytimg.com/vi/6v6RLUb2TQQ/hqdefault.jpg', 
-10, 
-'Sticky', 
-'small but clean and comes with a dog', 
-5, 
-'4545 e drive', 
-89999, 
-'pinetop', 
+('https://i.ytimg.com/vi/6v6RLUb2TQQ/hqdefault.jpg',
+10,
+'Sticky',
+'small but clean and comes with a dog',
+5,
+'4545 e drive',
+89999,
+'pinetop',
 'AZ',
 2,
 50

@@ -2,24 +2,22 @@ import axios from 'axios';
 
 const initalState = {
   houses: [],
-  loadingHouses: false,
   favoriteHouses: [],
-  loadingFavorites: false
+  listedHouses: []
 };
 
 const GET_HOUSES = 'GET_HOUSES';
 const GET_FAVORITES = 'GET_FAVORITES';
+const GET_LISTED = 'GET_LISTED';
 
 export default function reducer(state = initalState, action) {
   switch (action.type) {
-    case `${GET_HOUSES}_PENDING`:
-      return Object.assign({}, state, { loadingHouses: true });
     case `${GET_HOUSES}_FULFILLED`:
-      return Object.assign({}, state, { loadingHouses: false, houses: action.payload });
-    case `${GET_FAVORITES}_PENDING`:
-      return Object.assign({}, state, { loadingFavorites: true });
+      return Object.assign({}, state, { houses: action.payload });
     case `${GET_FAVORITES}_FULFILLED`:
-      return Object.assign({}, state, { loadingFavorites: false, favoriteHouses: action.payload });
+      return Object.assign({}, state, { favoriteHouses: action.payload });
+    case `${GET_LISTED}_FULFILLED`:
+      return Object.assign({}, state, { listedHouses: action.payload });
     default:
       return state;
   }
@@ -54,5 +52,12 @@ export function unfavoriteHouse(houseId) {
   return {
     type: GET_FAVORITES,
     payload: axios.delete(`/api/favorites/${houseId}`).then(favHouses => favHouses.data)
+  };
+}
+
+export function getListed() {
+  return {
+    type: GET_LISTED,
+    payload: axios.get('/listed').then(listedHouses => listedHouses.data)
   };
 }

@@ -34,6 +34,11 @@
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "nodemon --watch server"
+    "server": "nodemon --watch server",
+    "now-start": "node server/server.js",
+    "deploy": "now --public --dotenv=.env.prod -d"
+  },
+  "now": {
+    "alias": "Rasbandit-Houser"
   }
 }

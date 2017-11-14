@@ -58,6 +58,15 @@ body {
   .auth img {
     width: 250px;
     height: auto; }
+  .auth .example {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .auth .example h1 {
+      margin-bottom: 4px;
+      font-size: 20px;
+      font-weight: 400; }
   .auth .inputs {
     width: 80%;
     height: auto; }
@@ -361,6 +370,9 @@ body {
           cursor: pointer; }
   .favorites .house-card:hover {
     transform: scale(1.05); }
+
+.bottomBtns {
+  display: flex; }
 
 .house-card {
   display: flex;

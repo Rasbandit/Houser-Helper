@@ -3,12 +3,15 @@ import axios from 'axios';
 const initalState = {
   houses: [],
   favoriteHouses: [],
-  listedHouses: []
+  listedHouses: [],
+  user: {}
 };
 
 const GET_HOUSES = 'GET_HOUSES';
 const GET_FAVORITES = 'GET_FAVORITES';
 const GET_LISTED = 'GET_LISTED';
+const GET_USER = 'GET_USER';
+const LOG_OUT = 'LOG_OUT';
 
 export default function reducer(state = initalState, action) {
   switch (action.type) {
@@ -18,6 +21,10 @@ export default function reducer(state = initalState, action) {
       return Object.assign({}, state, { favoriteHouses: action.payload });
     case `${GET_LISTED}_FULFILLED`:
       return Object.assign({}, state, { listedHouses: action.payload });
+    case GET_USER:
+      return Object.assign({}, state, { user: action.payload });
+    case LOG_OUT:
+      return Object.assign({}, state, { user: action.payload });
     default:
       return state;
   }
@@ -59,5 +66,19 @@ export function getListed() {
   return {
     type: GET_LISTED,
     payload: axios.get('/listed').then(listedHouses => listedHouses.data)
+  };
+}
+
+export function getUser(user) {
+  return {
+    type: GET_USER,
+    payload: user
+  };
+}
+
+export function logOut() {
+  return{
+    type: LOG_OUT,
+    payload: {}
   };
 }

@@ -22,6 +22,9 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+    if(!this.props.user.id) {
+      this.props.history.push('/');
+    }
     this.props.getHouses();
     this.props.getFavorites();
     this.props.getListed();
@@ -103,7 +106,8 @@ class Dashboard extends React.Component {
 function mapStateToProps(state) {
   return {
     houses: state.houses,
-    favoriteHouses: state.favoriteHouses
+    favoriteHouses: state.favoriteHouses,
+    user: state.user
   };
 }
 

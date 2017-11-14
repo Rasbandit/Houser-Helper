@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { logOut } from './../ducks/reducer';
 import houseLogo from './../images/header_logo.png';
 
 class Nav extends Component {
   async logout() {
+    this.props.logOut();
     await axios.delete('/logout');
   }
 
@@ -46,4 +48,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps, { logOut })(Nav);

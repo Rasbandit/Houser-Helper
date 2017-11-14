@@ -14,7 +14,7 @@ module.exports = {
       await req.app.get('db').registerUser([username, password]);
       const user = await req.app.get('db').login([username, password]);
       req.session.user = user[0];
-      res.status(200).send();
+      res.status(200).send(req.session.user);
     }
   },
 
@@ -23,7 +23,7 @@ module.exports = {
     const user = await req.app.get('db').login([username, password]);
     if (user[0]) {
       req.session.user = user[0];
-      res.status(200).send();
+      res.status(200).send(req.session.user);
     } else {
       res.status(401).send();
     }

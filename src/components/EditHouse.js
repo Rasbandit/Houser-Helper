@@ -243,8 +243,10 @@ class Edit extends Component {
               /></h4>
           </div>
         </div>
-        <div onClick={() => { this.sendUpdate(); }} className="favorite">Update House</div>
-        <div onClick={() => { this.deleteHouse(); }} className="unfavorite">Delete House</div>
+        <div className="bottomBtns">
+          <div onClick={() => { this.sendUpdate(); }} className="favorite">Update House</div>
+          <div onClick={() => { this.deleteHouse(); }} className="unfavorite">Delete House</div>
+        </div>
       </div>
     );
   }

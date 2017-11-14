@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { getHouses, getFavorites } from '../../ducks/reducer';
+import { getHouses, getFavorites, getListed, getUser } from '../../ducks/reducer';
 
 import houseImg from './../../images/auth_logo.png';
 import SweetAlert from 'sweetalert2-react';
@@ -22,15 +22,15 @@ class Auth extends React.Component {
   componentDidMount() {
     this.props.getHouses();
     this.props.getFavorites();
+    this.props.getListed();
   }
 
   login(loginInfo) {
     if (loginInfo.username && loginInfo.password) {
       axios.post('/api/auth/login', loginInfo)
         .then((response) => {
-          if(response.status === 200) {
-            this.props.history.push('/dashboard');
-          }
+          this.props.getUser(response.data);
+          this.props.history.push('/dashboard');
         })
         .catch((err) => {
           this.setState({ wrongLogin: true });
@@ -44,9 +44,8 @@ class Auth extends React.Component {
     if(registerInfo.username && registerInfo.password) {
       axios.post('/api/auth/register', registerInfo)
         .then((response) => {
-          if (response.status === 200) {
-            this.props.history.push('/dashboard');
-          }
+          this.props.getUser(response.data);
+          this.props.history.push('/dashboard');
         })
         .catch((err) => {
           this.setState({ usernameExists: true });
@@ -100,6 +99,11 @@ class Auth extends React.Component {
           onConfirm={() => this.setState({ emptyFields: false })}
         />
         <img src={houseImg} alt="Its a pic of a house, I wouldn't worry about it grandma" />
+        <div className="example">
+          <h1>Example account</h1>
+          <h1>Username: Bob Ross</h1>
+          <h1>Password: HLT</h1>
+        </div>
         <div className="inputs">
           <h3>Username</h3>
           <input
@@ -130,4 +134,4 @@ function mapStateToProps(state) {
   return {};
 }
 
-export default connect(mapStateToProps, { getHouses, getFavorites })(Auth);
+export default connect(mapStateToProps, { getHouses, getFavorites, getListed, getUser })(Auth);

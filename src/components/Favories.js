@@ -11,7 +11,7 @@ class Favorites extends Component {
 
   render() {
     const houses = this.props.houses.filter((house) => {
-      for(let i = 0; i < this.props.favoriteHouses.length; i += 1) {
+      for (let i = 0; i < this.props.favoriteHouses.length; i += 1) {
         if (house.id === this.props.favoriteHouses[i].house_id) {
           return true;
         }
@@ -43,3 +43,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { getHouses, getFavorites })(Favorites);
+
+
+funciton HouseCard(props) {
+  props
+}

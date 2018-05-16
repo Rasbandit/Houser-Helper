@@ -15,7 +15,7 @@ class Auth extends React.Component {
       password: '',
       wrongLogin: false,
       emptyFields: false,
-      usernameExists: false
+      usernameExists: false,
     };
   }
 
@@ -26,13 +26,15 @@ class Auth extends React.Component {
   }
 
   login(loginInfo) {
-    if (loginInfo.username && loginInfo.password) {
-      axios.post('/api/auth/login', loginInfo)
-        .then((response) => {
+    console.log(process.env.NODE_ENV);
+    if ((loginInfo.username && loginInfo.password) || process.env.NODE_ENV === 'development') {
+      axios
+        .post('/api/auth/login', loginInfo)
+        .then(response => {
           this.props.getUser(response.data);
           this.props.history.push('/dashboard');
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState({ wrongLogin: true });
         });
     } else {
@@ -41,13 +43,14 @@ class Auth extends React.Component {
   }
 
   register(registerInfo) {
-    if(registerInfo.username && registerInfo.password) {
-      axios.post('/api/auth/register', registerInfo)
-        .then((response) => {
+    if (registerInfo.username && registerInfo.password) {
+      axios
+        .post('/api/auth/register', registerInfo)
+        .then(response => {
           this.props.getUser(response.data);
           this.props.history.push('/dashboard');
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState({ usernameExists: true });
         });
     } else {
@@ -55,16 +58,15 @@ class Auth extends React.Component {
     }
   }
 
-
   updateUsername(username) {
     this.setState({
-      username
+      username,
     });
   }
 
   updatePassword(password) {
     this.setState({
-      password
+      password,
     });
   }
 
@@ -72,8 +74,8 @@ class Auth extends React.Component {
     return (
       <div
         className="auth"
-        onKeyUp={(e) => {
-          if(e.keyCode === 13) {
+        onKeyUp={e => {
+          if (e.keyCode === 13) {
             this.login(this.state);
           }
         }}
@@ -109,7 +111,9 @@ class Auth extends React.Component {
           <input
             type="text"
             value={this.state.username}
-            onChange={(e) => { this.updateUsername(e.target.value); }}
+            onChange={e => {
+              this.updateUsername(e.target.value);
+            }}
           />
         </div>
         <div className="inputs">
@@ -117,13 +121,29 @@ class Auth extends React.Component {
           <input
             type="password"
             value={this.state.password}
-            onChange={(e) => { this.updatePassword(e.target.value); }}
+            onChange={e => {
+              this.updatePassword(e.target.value);
+            }}
           />
         </div>
 
         <div className="buttons">
-          <div className="button light-green" onClick={() => { this.login(this.state); }}>Login</div>
-          <div className="button dark-green" onClick={() => { this.register(this.state); }}>Register</div>
+          <div
+            className="button light-green"
+            onClick={() => {
+              this.login(this.state);
+            }}
+          >
+            Login
+          </div>
+          <div
+            className="button dark-green"
+            onClick={() => {
+              this.register(this.state);
+            }}
+          >
+            Register
+          </div>
         </div>
       </div>
     );

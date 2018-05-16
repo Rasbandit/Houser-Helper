@@ -26,7 +26,7 @@ class Wizzard extends Component {
       recomendedRent: '',
       desiredRent: '',
       uploadPass: false,
-      uploadFail: false
+      uploadFail: false,
     };
 
     this.handleStepOne = this.handleStepOne.bind(this);
@@ -52,7 +52,7 @@ class Wizzard extends Component {
 
   handleStepThree(info) {
     const { images } = info;
-    if(images.length) {
+    if (images.length) {
       this.setState({ images });
       this.props.history.push('/wizzard/4');
     }
@@ -60,8 +60,8 @@ class Wizzard extends Component {
 
   handleStepFour(info) {
     const { loanAmount, monthlyMortgage } = info;
-    if(loanAmount && monthlyMortgage) {
-      const recomendedRent = monthlyMortgage + (monthlyMortgage * 0.25);
+    if (loanAmount && monthlyMortgage) {
+      const recomendedRent = monthlyMortgage + monthlyMortgage * 0.25;
       this.setState({ loanAmount, monthlyMortgage, recomendedRent });
       this.props.history.push('/wizzard/5');
     }
@@ -69,7 +69,7 @@ class Wizzard extends Component {
 
   handleStepFive(info) {
     const { desiredRent } = info;
-    if(desiredRent) {
+    if (desiredRent) {
       swal({
         title: 'Uploading House Info',
         text: 'Please wait.',
@@ -80,7 +80,7 @@ class Wizzard extends Component {
             this.setState({ desiredRent }, async () => {
               const data = await axios.post('/api/create', this.state);
               swal.close();
-              if(data.status === 200) {
+              if (data.status === 200) {
                 this.setState({ uploadPass: true });
               } else {
                 this.setState({ uploadFail: true });
@@ -100,7 +100,11 @@ class Wizzard extends Component {
           type="success"
           title="Success"
           text="Your listing was uploaded!"
-          onConfirm={() => this.setState({ uploadPass: false }, () => { this.props.history.push('/dashboard'); })}
+          onConfirm={() =>
+            this.setState({ uploadPass: false }, () => {
+              this.props.history.push('/dashboard');
+            })
+          }
         />
         <SweetAlert
           show={this.state.uploadFail}
@@ -118,12 +122,7 @@ class Wizzard extends Component {
         <Switch>
           <Route
             path="/wizzard/1"
-            render={() => (
-              <One
-                handleChange={this.handleStepOne}
-                title={this.state.title}
-                desc={this.state.desc}
-              />)}
+            render={() => <One handleChange={this.handleStepOne} title={this.state.title} desc={this.state.desc} />}
           />
           <Route
             path="/wizzard/2"
@@ -139,12 +138,7 @@ class Wizzard extends Component {
           />
           <Route
             path="/wizzard/3"
-            render={() => (
-              <Three
-                handleChange={this.handleStepThree}
-                images={this.state.images}
-              />
-            )}
+            render={() => <Three handleChange={this.handleStepThree} images={this.state.images} />}
           />
           <Route
             path="/wizzard/4"

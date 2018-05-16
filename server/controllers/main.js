@@ -3,7 +3,6 @@
 */
 
 module.exports = {
-
   async register(req, res) {
     const { username, password } = req.body;
 
@@ -19,6 +18,9 @@ module.exports = {
   },
 
   async login(req, res) {
+    console.log('its dev time!');
+    req.session.user = { id: 1, username: 'Bob Ross' };
+    res.status(200).send(req.session.user);
     const { username, password } = req.body;
     const user = await req.app.get('db').login([username, password]);
     if (user[0]) {
@@ -30,18 +32,28 @@ module.exports = {
   },
 
   getAllHouses(req, res) {
-    req.app.get('db').getAllHouses().then(houses => res.status(200).send(houses));
+    req.app
+      .get('db')
+      .getAllHouses()
+      .then(houses => res.status(200).send(houses));
   },
 
   async favorite(req, res) {
+    // const { id: paramsId } = req.params;
+    // const { user } = req.session;
     const DB = req.app.get('db');
-    if(req.session.user) {
-      const matches = DB.checkDuplicateFavorite([req.session.user.id, req.params.id]);
+    if (process.env.NODE_ENV === 'development') {
+      const user = {
+        id: 1,
+      };
+    }
+    if (user) {
+      const matches = await DB.checkDuplicateFavorite([user.id, paramsId]);
       if (matches[0]) {
-        res.send(await DB.getUsersFavorites([req.session.user.id]));
+        res.send(await DB.getUsersFavorites([user.id]));
       } else {
-        await DB.addFavorite([req.session.user.id, req.params.id]);
-        res.send(await DB.getUsersFavorites([req.session.user.id]));
+        await DB.addFavorite([user.id, paramsId]);
+        res.send(await DB.getUsersFavorites([user.id]));
       }
     } else {
       res.send([]);
@@ -49,7 +61,7 @@ module.exports = {
   },
 
   async getFavoritesId(req, res) {
-    if(req.session.user) {
+    if (req.session.user) {
       res.send(await req.app.get('db').getUsersFavorites([req.session.user.id]));
     } else {
       res.send([]);
@@ -58,7 +70,7 @@ module.exports = {
 
   async unfavorite(req, res) {
     const DB = req.app.get('db');
-    if(req.session.user) {
+    if (req.session.user) {
       await DB.deleteFavorite([req.session.user.id, req.params.id]);
       res.send(await DB.getUsersFavorites([req.session.user.id]));
     } else {
@@ -69,7 +81,7 @@ module.exports = {
   async getHouse(req, res) {
     const DB = req.app.get('db');
     const house = await DB.getHouse(req.params.id);
-    if(house[0]) {
+    if (house[0]) {
       const images = await DB.getImages(req.params.id);
       house[0].images = images;
       res.send(house[0]);
@@ -80,9 +92,34 @@ module.exports = {
 
   async addHouse(req, res) {
     const DB = req.app.get('db');
-    const { title, desc, address, city, state, zip, images, loanAmount, monthlyMortgage, recomendedRent, desiredRent } = req.body;
-    const house = await DB.createListing([images[0], loanAmount, title, desc, desiredRent, address, zip, city, state, recomendedRent, monthlyMortgage, req.session.user.id]);
-    images.forEach((img) => {
+    const {
+      title,
+      desc,
+      address,
+      city,
+      state,
+      zip,
+      images,
+      loanAmount,
+      monthlyMortgage,
+      recomendedRent,
+      desiredRent,
+    } = req.body;
+    const house = await DB.createListing([
+      images[0],
+      loanAmount,
+      title,
+      desc,
+      desiredRent,
+      address,
+      zip,
+      city,
+      state,
+      recomendedRent,
+      monthlyMortgage,
+      req.session.user.id,
+    ]);
+    images.forEach(img => {
       DB.addImage(house[0].id, img);
     });
     res.send();
@@ -90,7 +127,7 @@ module.exports = {
 
   async getListed(req, res) {
     const DB = req.app.get('db');
-    if(req.session.user) {
+    if (req.session.user) {
       const listed = await DB.getListed(req.session.user.id);
       res.status(200).send(listed);
     } else {
@@ -100,16 +137,39 @@ module.exports = {
 
   async updateHouse(req, res) {
     const DB = req.app.get('db');
-    const { loan, title, description, desired_rent, address, zip, city, state, recomended_rent, mortgage, id } = req.body;
-    await DB.updateHouse([loan, title, description, desired_rent, address, zip, city, state, recomended_rent, mortgage, id]);
+    const {
+      loan,
+      title,
+      description,
+      desired_rent,
+      address,
+      zip,
+      city,
+      state,
+      recomended_rent,
+      mortgage,
+      id,
+    } = req.body;
+    await DB.updateHouse([
+      loan,
+      title,
+      description,
+      desired_rent,
+      address,
+      zip,
+      city,
+      state,
+      recomended_rent,
+      mortgage,
+      id,
+    ]);
     res.status(200).send();
   },
 
   async delete(req, res) {
     const DB = req.app.get('db');
     const { id } = req.params;
-    console.log(id, req.session.user.id);
-    if(req.session.user) {
+    if (req.session.user) {
       await DB.deleteImages(id);
       await DB.deleteHouse([id, req.session.user.id]);
       res.status(200).send();
@@ -121,5 +181,5 @@ module.exports = {
   logout(req, res) {
     req.session.destroy();
     res.status(200).send();
-  }
+  },
 };

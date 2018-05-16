@@ -8,18 +8,22 @@ const express = require('express'),
 
 const main = require('./controllers/main');
 
+console.log(process.env.NODE_ENV);
+
 const app = express();
 
 app.use(express.static(`${__dirname}./../build`));
 
 app.use(bodyParser.json());
-app.use(session({
-  secret: process.env.SECRET,
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
-massive(process.env.CONNECTION_STRING).then((db) => {
+massive(process.env.CONNECTION_STRING).then(db => {
   app.set('db', db);
   app.listen(port, () => {
     console.log(`Ship docked at port: ${port}`);

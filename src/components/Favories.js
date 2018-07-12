@@ -10,22 +10,24 @@ class Favorites extends Component {
   }
 
   render() {
-    const houses = this.props.houses.filter((house) => {
-      for (let i = 0; i < this.props.favoriteHouses.length; i += 1) {
-        if (house.id === this.props.favoriteHouses[i].house_id) {
-          return true;
+    const houses = this.props.houses
+      .filter(house => {
+        for (let i = 0; i < this.props.favoriteHouses.length; i += 1) {
+          if (house.id === this.props.favoriteHouses[i].house_id) {
+            return true;
+          }
         }
-      }
-      return false;
-    }).map(house => (
-      <HouseCard
-        house={house}
-        favoriteHouses={this.props.favoriteHouses}
-        key={house.id}
-        favorite={this.favorite}
-        unfavorite={this.unfavorite}
-      />
-    ));
+        return false;
+      })
+      .map(house => (
+        <HouseCard
+          house={house}
+          favoriteHouses={this.props.favoriteHouses}
+          key={house.id}
+          favorite={this.favorite}
+          unfavorite={this.unfavorite}
+        />
+      ));
     return (
       <div className="favorites">
         <h1>Your Favorites</h1>
@@ -38,13 +40,8 @@ class Favorites extends Component {
 function mapStateToProps(state) {
   return {
     houses: state.houses,
-    favoriteHouses: state.favoriteHouses
+    favoriteHouses: state.favoriteHouses,
   };
 }
 
 export default connect(mapStateToProps, { getHouses, getFavorites })(Favorites);
-
-
-funciton HouseCard(props) {
-  props
-}

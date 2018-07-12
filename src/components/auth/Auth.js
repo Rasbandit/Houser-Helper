@@ -27,7 +27,7 @@ class Auth extends React.Component {
 
   login(loginInfo) {
     console.log(process.env.NODE_ENV);
-    if ((loginInfo.username && loginInfo.password) || process.env.NODE_ENV === 'development') {
+    if (loginInfo.username && loginInfo.password) {
       axios
         .post('/api/auth/login', loginInfo)
         .then(response => {

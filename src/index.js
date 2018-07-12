@@ -7,13 +7,12 @@ import './styles/main.css';
 import App from './App';
 // import registerServiceWorker from './registerServiceWorker';
 
-console.log(_)
-
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter>
       <App />
     </HashRouter>
-  </Provider>
-  , document.getElementById('root'));
+  </Provider>,
+  document.getElementById('root')
+);
 // registerServiceWorker();

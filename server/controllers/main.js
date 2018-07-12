@@ -18,9 +18,6 @@ module.exports = {
   },
 
   async login(req, res) {
-    console.log('its dev time!');
-    req.session.user = { id: 1, username: 'Bob Ross' };
-    res.status(200).send(req.session.user);
     const { username, password } = req.body;
     const user = await req.app.get('db').login([username, password]);
     if (user[0]) {

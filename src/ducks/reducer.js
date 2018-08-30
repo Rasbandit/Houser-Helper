@@ -4,7 +4,7 @@ const initalState = {
   houses: [],
   favoriteHouses: [],
   listedHouses: [],
-  user: {}
+  user: {},
 };
 
 const GET_HOUSES = 'GET_HOUSES';
@@ -33,52 +33,49 @@ export default function reducer(state = initalState, action) {
 export function getHouses() {
   return {
     type: GET_HOUSES,
-    payload: axios.get('/api/properties')
-      .then(houses => houses.data
-      )
+    payload: axios.get('/api/properties').then(houses => houses.data),
   };
 }
 
 export function getFavorites() {
   return {
     type: GET_FAVORITES,
-    payload: axios.get('/api/favoritesid')
-      .then(favorites => favorites.data
-      )
+    payload: axios.get('/api/favoritesid').then(favorites => favorites.data),
   };
 }
 
 export function favoriteHouse(houseId) {
   return {
     type: GET_FAVORITES,
-    payload: axios.post(`/api/favorites/${houseId}`).then(favHouses => favHouses.data)
+    payload: axios.post(`/api/favorites/${houseId}`).then(favHouses => favHouses.data),
   };
 }
 
 export function unfavoriteHouse(houseId) {
+  console.log(houseId);
   return {
     type: GET_FAVORITES,
-    payload: axios.delete(`/api/favorites/${houseId}`).then(favHouses => favHouses.data)
+    payload: axios.post(`/api/favorites/${houseId}`).then(favHouses => favHouses.data),
   };
 }
 
 export function getListed() {
   return {
     type: GET_LISTED,
-    payload: axios.get('/listed').then(listedHouses => listedHouses.data)
+    payload: axios.get('/listed').then(listedHouses => listedHouses.data),
   };
 }
 
 export function getUser(user) {
   return {
     type: GET_USER,
-    payload: user
+    payload: user,
   };
 }
 
 export function logOut() {
-  return{
+  return {
     type: LOG_OUT,
-    payload: {}
+    payload: {},
   };
 }

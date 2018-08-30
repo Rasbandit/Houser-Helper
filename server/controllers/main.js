@@ -36,24 +36,30 @@ module.exports = {
   },
 
   async favorite(req, res) {
-    // const { id: paramsId } = req.params;
-    // const { user } = req.session;
-    const DB = req.app.get('db');
-    if (process.env.NODE_ENV === 'development') {
-      const user = {
-        id: 1,
-      };
-    }
-    if (user) {
-      const matches = await DB.checkDuplicateFavorite([user.id, paramsId]);
-      if (matches[0]) {
-        res.send(await DB.getUsersFavorites([user.id]));
-      } else {
-        await DB.addFavorite([user.id, paramsId]);
-        res.send(await DB.getUsersFavorites([user.id]));
+    try {
+      const { id: paramsId } = req.params;
+      let { user } = req.session;
+      const DB = req.app.get('db');
+      if (process.env.NODE_ENV === 'development') {
+        user = {
+          id: 1,
+        };
       }
-    } else {
-      res.send([]);
+      if (user) {
+        const matches = await DB.checkDuplicateFavorite([user.id, paramsId]);
+        if (matches[0]) {
+          await DB.deleteFavorite([user.id, paramsId]);
+          res.send(await DB.getUsersFavorites([user.id]));
+        } else {
+          await DB.addFavorite([user.id, paramsId]);
+          res.send(await DB.getUsersFavorites([user.id]));
+        }
+      } else {
+        res.send([]);
+      }
+    } catch (err) {
+      console.log(err);
+      res.send(500);
     }
   },
 
@@ -89,6 +95,12 @@ module.exports = {
 
   async addHouse(req, res) {
     const DB = req.app.get('db');
+    let userId;
+    if (process.env.NODE_ENV === 'development') {
+      userId = 1;
+    } else {
+      userId = req.session.user.id;
+    }
     const {
       title,
       desc,
@@ -114,7 +126,7 @@ module.exports = {
       state,
       recomendedRent,
       monthlyMortgage,
-      req.session.user.id,
+      userId,
     ]);
     images.forEach(img => {
       DB.addImage(house[0].id, img);

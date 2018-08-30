@@ -70,6 +70,11 @@ class Auth extends React.Component {
     });
   }
 
+  getPage() {
+    const x = document.querySelector('.auth');
+    console.log(x.innerHTML);
+  }
+
   render() {
     return (
       <div

@@ -12,43 +12,43 @@ class Three extends Component {
     this.state = {
       images: props.images,
       main: 0,
-      show: false
+      show: false,
     };
   }
 
   setBigImg(main) {
     this.setState({
-      main
+      main,
     });
   }
 
   addImage(img, position) {
     let newImages = this.state.images;
     newImages[position] = img;
-    newImages = newImages.filter((item) => {
+    newImages = newImages.filter(item => {
       if (item) return true;
       return false;
     });
     this.setState({
-      images: newImages
+      images: newImages,
     });
   }
 
   clearImage(position) {
     const newImages = this.state.images;
     let main = this.state.main;
-    if(position === this.state.main || position > this.state.images.length - 1) {
+    if (position === this.state.main || position > this.state.images.length - 1) {
       main = 0;
     }
     newImages.splice(position, 1);
     this.setState({
       main,
-      images: newImages
+      images: newImages,
     });
   }
 
   nextStep(info) {
-    if(info.images.length > 0) {
+    if (info.images.length > 0) {
       this.props.handleChange(info);
     } else {
       this.setState({ show: true });
@@ -61,24 +61,32 @@ class Three extends Component {
         <input
           type="text"
           value={item}
-          onChange={(e) => { this.addImage(e.target.value, id); }}
+          id={id}
+          onChange={e => {
+            this.addImage(e.target.value, id);
+          }}
         />
         <div
           className="clear-button"
-          onClick={() => { this.clearImage(id); }}
+          onClick={() => {
+            this.clearImage(id);
+          }}
         >
           Clear
         </div>
       </div>
     ));
 
-    if(this.state.images.length < 4) {
+    if (this.state.images.length < 4) {
       inputs.push(
         <div className="img-inputs" key={this.state.images[this.state.images.length]}>
           <input
             type="text"
             value=""
-            onChange={(e) => { this.addImage(e.target.value, this.state.images.length); }}
+            id={this.state.images.length}
+            onChange={e => {
+              this.addImage(e.target.value, this.state.images.length);
+            }}
           />
         </div>
       );
@@ -88,9 +96,11 @@ class Three extends Component {
       <div
         key={image.id}
         className="thumbnail"
-        onClick={() => { this.setBigImg(index); }}
+        onClick={() => {
+          this.setBigImg(index);
+        }}
       >
-        <img src={image} alt="" />
+        <img id={image.id} src={image} alt="" />
       </div>
     ));
 
@@ -103,9 +113,7 @@ class Three extends Component {
           text="Please add at least one picture"
           onConfirm={() => this.setState({ show: false })}
         />
-        <h1>
-          Step Three
-        </h1>
+        <h1>Step Three</h1>
         <div className="step-gauge">
           <img src={complete} alt="circle" />
           <img src={complete} alt="circle" />
@@ -115,11 +123,9 @@ class Three extends Component {
         </div>
         <div className="inputs">
           <div className="img-container">
-            {this.state.images[0] ? (<img src={this.state.images[this.state.main]} alt="" />) : 'Image Preview'}
+            {this.state.images[0] ? <img src={this.state.images[this.state.main]} alt="" /> : 'Image Preview'}
           </div>
-          <div className="thumbnails">
-            {thumbnails.length <= 1 ? '' : thumbnails}
-          </div>
+          <div className="thumbnails">{thumbnails.length <= 1 ? '' : thumbnails}</div>
           <section>
             <label>Image URL</label>
             {inputs}
@@ -128,7 +134,12 @@ class Three extends Component {
             <Link to="/wizzard/2" className="next-button">
               Previous Step
             </Link>
-            <div onClick={() => { this.nextStep(this.state); }} className="next-button">
+            <div
+              onClick={() => {
+                this.nextStep(this.state);
+              }}
+              className="next-button"
+            >
               Next Step
             </div>
           </div>
